@@ -34,7 +34,7 @@ def get_one_book(nom_livre,numero):
         tax =table.findAll('td')[4].text
         number_available= table.findAll('td')[5].text
         number_of_reviews =table.findAll('td')[6].text
-        liste_livre.append([product_url,image_url,titre,product_description,category,upc,product_type,price_excl_tax,price_incl_tax,tax,number_available,number_of_reviews])
+        liste_livre.append([product_url,upc,titre,price_incl_tax,price_excl_tax,number_available,product_description,category,number_of_reviews,image_url])
         return liste_livre
      except Exception as e:
              return [e]
@@ -42,9 +42,9 @@ def get_one_book(nom_livre,numero):
 one_book = get_one_book("a-light-in-the-attic",1000)
 print(one_book)
 
-#fonction pour creer un csv
+#create a ccv file
 def create_csv():
- en_tete = ["product_url","image_url","titre","product_description","category","upc","product_type","price_excl_tax","price_incl_tax","tax","number_available","number_of_reviews"]
+ en_tete = ["product_url","upc","titre","price_incl_tax","price_excl_tax","number_available","product_description","category","number_of_reviews","image_url"]
  fichier = "one_book.csv"
  with open(f'csv/{fichier}', 'w') as csv_file:
   writer = csv.writer(csv_file, delimiter=',')
