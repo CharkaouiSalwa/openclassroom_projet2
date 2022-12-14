@@ -44,11 +44,14 @@ print(one_book)
 
 #create a ccv file
 def create_csv():
- en_tete = ["product_url","upc","titre","price_incl_tax","price_excl_tax","number_available","product_description","category","number_of_reviews","image_url"]
- fichier = "one_book.csv"
- with open(f'csv/{fichier}', 'w') as csv_file:
-  writer = csv.writer(csv_file, delimiter=',')
-  writer.writerow(en_tete)
-  writer.writerows(one_book)
+ try:
+     en_tete = ["product_url","upc","titre","price_incl_tax","price_excl_tax","number_available","product_description","category","number_of_reviews","image_url"]
+     fichier = "one_book.csv"
+     with open(f'csv/{fichier}', 'w') as csv_file:
+      writer = csv.writer(csv_file, delimiter=',')
+      writer.writerow(en_tete)
+      writer.writerows(one_book)
+ except Exception as e:
+     print(e)
 
 create_csv()
