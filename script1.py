@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import csv
 
 #function to get one book by parameters (string:book name and string:book number)
 # return list of details of the book
@@ -40,3 +41,14 @@ def get_one_book(nom_livre,numero):
 
 one_book = get_one_book("a-light-in-the-attic",1000)
 print(one_book)
+
+#fonction pour creer un csv
+def create_csv():
+ en_tete = ["product_url","image_url","titre","product_description","category","upc","product_type","price_excl_tax","price_incl_tax","tax","number_available","number_of_reviews"]
+ fichier = "one_book.csv"
+ with open(f'csv/{fichier}', 'w') as csv_file:
+  writer = csv.writer(csv_file, delimiter=',')
+  writer.writerow(en_tete)
+  writer.writerows(one_book)
+
+create_csv()
