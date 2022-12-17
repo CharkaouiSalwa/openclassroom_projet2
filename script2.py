@@ -6,6 +6,7 @@ import csv,os
 from script1 import get_one_book
 
 #function to get  books_category by parameters (string:book name and string:book number)
+# return list of details of the book of the category in params
 def get_books_category(nom_categorie,num):
     try:
      #convert int to string

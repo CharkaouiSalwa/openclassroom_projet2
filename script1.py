@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import csv, os
 
 #function to get one book by parameters (string:book name and string:book number)
-# return list of details of the book
+#return list of details of the book
 def get_one_book(nom_livre,numero):
      try:
         #convert int to string
