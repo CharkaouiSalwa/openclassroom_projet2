@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-import csv
+import csv,os
 
 
 from script1 import get_one_book
@@ -72,7 +72,7 @@ def get_books_category(nom_categorie,num):
 
 #test run of get_books_category
 #books_category = get_books_category("mystery","3") #2 pages
-#books_category = get_books_category("travel","2") #11 books
+books_category = get_books_category("travel","2") #11 books
 #books_category = get_books_category("fiction","10") #4 pages
 
 
@@ -81,6 +81,10 @@ def create_csv():
     try:
      en_tete = ["product_url","upc","titre","price_incl_tax","price_excl_tax","number_available","product_description","category","reviews_rating","image_url"]
      fichier = "books_category.csv"
+     # checking if the directory csv exist or not.
+     if not os.path.exists("csv"):
+         # if the csv directory is not present then create it.
+         os.makedirs("csv")
      with open(f'csv/{fichier}', 'w') as csv_file:
       writer = csv.writer(csv_file, delimiter=',')
       writer.writerow(en_tete)
@@ -89,5 +93,5 @@ def create_csv():
         return [e]
 
 #run function create_csv()
-#create_csv()
+create_csv()
 

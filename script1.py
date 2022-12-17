@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-import csv
+import csv, os
 
 #function to get one book by parameters (string:book name and string:book number)
 # return list of details of the book
@@ -40,13 +40,17 @@ def get_one_book(nom_livre,numero):
      except Exception as e:
              return [e]
 #run function get_one_book
-#one_book = get_one_book("a-light-in-the-attic",1000)
+one_book = get_one_book("a-light-in-the-attic",1000)
 
 #create a ccv file
 def create_csv():
  try:
      en_tete = ["product_url","upc","titre","price_incl_tax","price_excl_tax","number_available","product_description","category","reviews_rating","image_url"]
      fichier = "one_book.csv"
+     # checking if the directory csv exist or not.
+     if not os.path.exists("csv"):
+         # if the csv directory is not present then create it.
+         os.makedirs("csv")
      with open(f'csv/{fichier}', 'w') as csv_file:
       writer = csv.writer(csv_file, delimiter=',')
       writer.writerow(en_tete)
@@ -55,4 +59,4 @@ def create_csv():
      print(e)
 
 #run function create_csv
-#create_csv()
+create_csv()
