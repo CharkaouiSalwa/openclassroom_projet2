@@ -73,7 +73,7 @@ def get_books_category(nom_categorie,num):
 #test run of get_books_category
 #books_category = get_books_category("mystery","3") #2 pages
 #books_category = get_books_category("travel","2") #11 books
-books_category = get_books_category("fiction","10") #4 pages
+#books_category = get_books_category("fiction","10") #4 pages
 
 
 #create a ccv file
@@ -89,5 +89,5 @@ def create_csv():
         return [e]
 
 #run function create_csv()
-create_csv()
+#create_csv()
 

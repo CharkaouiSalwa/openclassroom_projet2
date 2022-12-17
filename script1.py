@@ -40,7 +40,7 @@ def get_one_book(nom_livre,numero):
      except Exception as e:
              return [e]
 #run function get_one_book
-one_book = get_one_book("a-light-in-the-attic",1000)
+#one_book = get_one_book("a-light-in-the-attic",1000)
 
 #create a ccv file
 def create_csv():
@@ -55,4 +55,4 @@ def create_csv():
      print(e)
 
 #run function create_csv
-create_csv()
+#create_csv()
