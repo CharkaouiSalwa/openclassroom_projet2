@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-import csv, os
+import csv, os, urllib.request, re
 
 #function to get one book by parameters (string:book name and string:book number)
 #return list of details of the book
@@ -23,6 +23,8 @@ def get_one_book(nom_livre,numero):
         image = soup.find('img')
         image_url = image.attrs['src']
         titre = image.attrs['alt']
+        titre = titre.replace('/','')
+        titre = re.sub(r"[\\/*?:#@()!'$<>| ]", "-", titre)
         product_description=soup.findAll('p')[3].text
         category =soup.findAll('a')[3].text
         table = soup.findAll('table')[0]
@@ -36,6 +38,23 @@ def get_one_book(nom_livre,numero):
         reviews_rating = soup.find('p',class_='star-rating')
         reviews_rating = reviews_rating['class'][1]
         liste_livre.append([product_url,upc,titre,price_incl_tax,price_excl_tax,number_available,product_description,category,reviews_rating,image_url])
+        #get image of book
+        full_image_url =""
+        url1 = "http://books.toscrape.com/"
+        url2 = image_url
+        url2 = url2[6:] #remove first 6 char using python slicing
+        full_image_url = url1+url2
+        image_name = (titre.lower())+".jpg" #convert to lower image name
+        image_name = image_name.replace(' ','-') #image name without whitespace
+        path = f'images/{category}'
+
+        # checking if the directory images/x exist or not.
+        if not os.path.exists(path):
+            # if the images/x directory is not present then create it.
+            os.makedirs(path)
+        #download image
+        urllib.request.urlretrieve(full_image_url,path+'/'+image_name)
+
         return liste_livre
      except Exception as e:
              return [e]
@@ -60,3 +79,4 @@ def create_csv():
 
 #run function create_csv
 create_csv()
+

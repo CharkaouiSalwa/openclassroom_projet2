@@ -23,14 +23,10 @@ def get_books_category(nom_categorie,num):
          soup = BeautifulSoup(r.content, "html.parser")
          liste = soup.find('ol')
          livres = liste.find_all('article', class_='product_pod')
-         nombre_page = soup.find('li',class_='current')
-         if nombre_page:
-             #strip to delete whitespaces in string
-             nombre_page = soup.find('li',class_='current').text.strip()
-             #split the text from space
-             nombre_page = nombre_page.split(' ')
-             #convert string to int
-             nombre_page = int(nombre_page[3])
+         next_page = soup.find('li',class_='next')
+         if next_page:
+             #get next page link
+             next_page = next_page.find('a')['href']
          #get all books from page 1 (index)
          for livre in livres:
               link = livre.find('a')['href']
@@ -41,40 +37,43 @@ def get_books_category(nom_categorie,num):
               if link == "":
                   return ["Ce livre n'existe pas, veuillez réessayer"]
               else:
-                  book_name = link[0]
+                  book_name = link[0].replace('/','')
                   book_num = link[1]
-                  liste_livre.append(get_one_book(book_name,book_num))
+                  liste_livre.extend(get_one_book(book_name,book_num))
          #get books from next pages
-         if nombre_page:
-             for i in range(2,nombre_page+1):
-                url = f"https://books.toscrape.com/catalogue/category/books/{nom_num}/page-{i}.html"
-                r = requests.get(url)
-                if r.status_code != 200:
-                    # return error msg if name or number book is not exist
-                    return ["Cette page n'existe pas, veuillez réessayer"]
-                soup = BeautifulSoup(r.content, "html.parser")
-                liste = soup.find('ol')
-                livres = liste.find_all('article', class_='product_pod')
-                # get all books from other pages
-                for livre in livres:
-                    link = livre.find('a')['href']
-                    link = link.split('/')
-                    link = link[3]
-                    link = link.split('_')
-                    if link == "":
-                        return ["Ce livre n'existe pas, veuillez réessayer"]
-                    else:
-                        book_name = link[0]
-                        book_num = link[1]
-                        liste_livre.append(get_one_book(book_name, book_num))
+         while next_page:
+            url = f"https://books.toscrape.com/catalogue/category/books/{nom_num}/{next_page}"
+            r = requests.get(url)
+            if r.status_code != 200:
+                # return error msg if name or number book is not exist
+                return ["Cette page n'existe pas, veuillez réessayer"]
+            soup = BeautifulSoup(r.content, "html.parser")
+            liste = soup.find('ol')
+            livres = liste.find_all('article', class_='product_pod')
+            # get all books from other pages
+            for livre in livres:
+                link = livre.find('a')['href']
+                link = link.split('/')
+                link = link[3]
+                link = link.split('_')
+                if link == "":
+                    return ["Ce livre n'existe pas, veuillez réessayer"]
+                else:
+                    book_name = link[0].replace('/','')
+                    book_num = link[1]
+                    liste_livre.extend(get_one_book(book_name, book_num))
+            next_page = soup.find('li', class_='next')
+            if next_page:
+                # get next page link
+                next_page = next_page.find('a')['href']
          return liste_livre
     except Exception as e:
       return [e]
 
 #test run of get_books_category
 #books_category = get_books_category("mystery","3") #2 pages
-books_category = get_books_category("travel","2") #11 books
-#books_category = get_books_category("fiction","10") #4 pages
+#books_category = get_books_category("travel","2") #11 books
+books_category = get_books_category("fiction","10") #4 pages
 
 
 #create a ccv file

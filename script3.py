@@ -50,8 +50,9 @@ def create_csv():
                    "product_description", "category", "reviews_rating", "image_url"]
         category_name = ""
         for i in range(len(books_each_cat)):
-            category_name = books_each_cat[i][0][0][7] #to get name of category from list
+            category_name = books_each_cat[i][0][7] #to get name of category from list
             category_name = category_name.lower() #convert all char to lower
+            category_name = category_name.replace(' ','-') #csv name without whitespace
             fichier = f"{category_name}-category.csv"
             # checking if the directory csv/categories exist or not.
             if not os.path.exists("csv/categories"):
