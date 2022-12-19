@@ -42,7 +42,6 @@ def get_all_books_each_category():
 
 #run function get_all_books_each_category
 books_each_cat = get_all_books_each_category()
-
 #create csv for each category
 def create_csv():
     try:

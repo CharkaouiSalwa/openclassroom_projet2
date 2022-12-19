@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-import csv, os, urllib.request, re
+import csv, os, urllib.request
 
 #function to get one book by parameters (string:book name and string:book number)
 #return list of details of the book
@@ -23,9 +23,8 @@ def get_one_book(nom_livre,numero):
         image = soup.find('img')
         image_url = image.attrs['src']
         titre = image.attrs['alt']
-        titre = titre.replace('/','')
-        titre = re.sub(r"[\\/*?:#@()!'$<>| ]", "-", titre)
         product_description=soup.findAll('p')[3].text
+        product_description=product_description.replace('\n','')
         category =soup.findAll('a')[3].text
         table = soup.findAll('table')[0]
         rows = table.findAll('tr')
@@ -44,8 +43,9 @@ def get_one_book(nom_livre,numero):
         url2 = image_url
         url2 = url2[6:] #remove first 6 char using python slicing
         full_image_url = url1+url2
-        image_name = (titre.lower())+".jpg" #convert to lower image name
-        image_name = image_name.replace(' ','-') #image name without whitespace
+        image_name = product_url.split('/')
+        image_name = image_name[4]
+        image_name = image_name+".jpg"
         path = f'images/{category}'
 
         # checking if the directory images/x exist or not.
@@ -59,7 +59,8 @@ def get_one_book(nom_livre,numero):
      except Exception as e:
              return [e]
 #run function get_one_book
-one_book = get_one_book("a-light-in-the-attic",1000)
+#one_book = get_one_book("a-light-in-the-attic",1000)
+one_book = get_one_book("the-star-touched-queen",764)
 
 #create a ccv file
 def create_csv():
