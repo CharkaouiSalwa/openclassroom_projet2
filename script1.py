@@ -4,22 +4,21 @@ import csv, os, urllib.request
 
 #function to get one book by parameters (string:book name and string:book number)
 #return list of details of the book
-def get_one_book(nom_livre,numero):
+def get_one_book(url):
      try:
         #convert int to string
-        if isinstance(numero,int):
-            numero = str(numero)
+       # if isinstance(numero,int):
+           # numero = str(numero)
 
-        nom_num = nom_livre+"_"+numero
+        #nom_num = nom_livre+"_"+numero
         liste_livre = []
-        url =f"https://books.toscrape.com/catalogue/{nom_num}/index.html"
+        #url =f"https://books.toscrape.com/catalogue/{nom_num}/index.html"
         r = requests.get(url)
         if r.status_code!=200:
             #return error msg if url doesn't work
             return ["Cette page n'existe pas, veuillez réessayer"]
         soup = BeautifulSoup(r.content, "html.parser")
         product_url =url
-
         image = soup.find('img')
         image_url = image.attrs['src']
         titre = image.attrs['alt']
@@ -36,7 +35,7 @@ def get_one_book(nom_livre,numero):
         number_available= table.findAll('td')[5].text
         reviews_rating = soup.find('p',class_='star-rating')
         reviews_rating = reviews_rating['class'][1]
-        liste_livre.append([product_url,upc,titre,price_incl_tax,price_excl_tax,number_available,product_description,category,reviews_rating,image_url])
+       # liste_livre.append([product_url,upc,titre,price_incl_tax,price_excl_tax,number_available,product_description,category,reviews_rating,image_url])
         #get image of book
         full_image_url =""
         url1 = "http://books.toscrape.com/"
@@ -55,16 +54,17 @@ def get_one_book(nom_livre,numero):
         #download image
         urllib.request.urlretrieve(full_image_url,path+'/'+image_name)
 
-        return liste_livre
+        return [product_url,upc,titre,price_incl_tax,price_excl_tax,number_available,product_description,category,reviews_rating,image_url]
      except Exception as e:
              return [e]
 #run function get_one_book
 #one_book = get_one_book("a-light-in-the-attic",1000)
-one_book = get_one_book("the-star-touched-queen",764)
+
 
 #create a ccv file
-def create_csv():
+def create_csv(url):
  try:
+    # one_book = get_one_book(nom_livre,num)
      en_tete = ["product_url","upc","titre","price_incl_tax","price_excl_tax","number_available","product_description","category","reviews_rating","image_url"]
      fichier = "one_book.csv"
      # checking if the directory csv exist or not.
@@ -74,10 +74,10 @@ def create_csv():
      with open(f'csv/{fichier}', 'w') as csv_file:
       writer = csv.writer(csv_file, delimiter=',')
       writer.writerow(en_tete)
-      writer.writerows(one_book)
+      writer.writerow(get_one_book(url))
  except Exception as e:
      print(e)
 
 #run function create_csv
-create_csv()
+create_csv("https://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html")
 
