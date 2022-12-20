@@ -61,15 +61,16 @@ un fihier one_book.csv  créer apres l'exécution pour le visiter :
  et aprés vous pouvez voir le résultat sur le tableau et cest la méme façon pour exécuter toutes les sriptes
 
 ## Résultat :
-* Un dossier "data" contenant :
+* Un dossier "openclassroom_projet2" contenant :
     * dossier csv contient le résultat d'exécution d'un seul livre, d'une catégorie, et aprés tous les livres de toute les catégories
     * dossier images contient les images de tous les livres
-## Contenu du repository git hub: 
+## Contenu du repository github: 
 * fichier sript1.py
 * fichier script2.py
 * fichier script3.py
 * fichier requirements.txt
 * fichier README.md
+* fichier .gitignore
 
 
 
