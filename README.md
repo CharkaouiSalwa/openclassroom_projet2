@@ -15,7 +15,7 @@ Avoir l'anacondas sur votre pc pour permettre d'utiliser la commande pip
 ```
 pip install Python
 ```
-Après l'installation, téléchargez le repo sur GitHub : [Github](https://github.com/CharkaouiSalwa/openclassroom_projet2) 
+Après l'installation, téléchargez le repo sur  [Github](https://github.com/CharkaouiSalwa/openclassroom_projet2) 
 Extraire le fichier telechargé, puis accéder au dossier du projet en ligne de commande:
 ```
 cd openclassroom_projet2 
@@ -28,8 +28,9 @@ Activer votre environnement :
 ```
 source  env/bin/activate
 ```
-Installer automatiquements les bibliothéque mentionés sur le fichier avec la commande :
-```pip install -r requirements.txt
+Installer automatiquements les bibliothéques mentionés sur le fichier avec la commande :
+```
+pip install -r requirements.txt
 ```
 Copier le lien d'un livre depuis le site http://books.toscrape.com/index.html et le coller sur le script1 .
 exemple d'un livre :
