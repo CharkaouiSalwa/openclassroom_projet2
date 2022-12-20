@@ -4,13 +4,14 @@
 ## Projet 2 : Utilisez les bases de Python pour l'analyse de marché
   Ce projet sert à suivre manuellement les prix des livres sur un sites web http://books.toscrape.com/index.html d’un concurrent, il y a trop de livres et trop de librairies en ligne l’objectif d'automatiser cette tâche laborieuse via un programme (un scraper) développé en Python, capable d'extraire les informations tarifaires d'autres librairies en ligne.
 
- 
+ ### prérequis :
+avoir l'anacondas sur votre pc pour permettre d'utiliser la commande pip
+
 ## ** l'installation de Python** 
 
 #### *Visitez le lien suivant* :   [Python](https://www.python.org/downloads/)
 #### *ou bien utilisez le terminal* :
-### prérequis :
-avoir l'anacondas sur votre pc pour permettre d'utiliser la commande pip
+
 ```
 pip install Python
 ```
