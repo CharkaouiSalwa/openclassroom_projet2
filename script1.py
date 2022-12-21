@@ -6,13 +6,6 @@ import csv, os, urllib.request
 #return list of details of the book
 def get_one_book(url):
      try:
-        #convert int to string
-       # if isinstance(numero,int):
-           # numero = str(numero)
-
-        #nom_num = nom_livre+"_"+numero
-        liste_livre = []
-        #url =f"https://books.toscrape.com/catalogue/{nom_num}/index.html"
         r = requests.get(url)
         if r.status_code!=200:
             #return error msg if url doesn't work
@@ -33,9 +26,11 @@ def get_one_book(url):
         price_incl_tax = table.findAll('td')[3].text
         tax =table.findAll('td')[4].text
         number_available= table.findAll('td')[5].text
+        number_available = number_available.split('(')
+        number_available=number_available[1]
+        number_available=number_available.replace(')','')
         reviews_rating = soup.find('p',class_='star-rating')
         reviews_rating = reviews_rating['class'][1]
-       # liste_livre.append([product_url,upc,titre,price_incl_tax,price_excl_tax,number_available,product_description,category,reviews_rating,image_url])
         #get image of book
         full_image_url =""
         url1 = "http://books.toscrape.com/"
@@ -57,14 +52,10 @@ def get_one_book(url):
         return [product_url,upc,titre,price_incl_tax,price_excl_tax,number_available,product_description,category,reviews_rating,image_url]
      except Exception as e:
              return [e]
-#run function get_one_book
-#one_book = get_one_book("a-light-in-the-attic",1000)
-
 
 #create a ccv file
 def create_csv(url):
  try:
-    # one_book = get_one_book(nom_livre,num)
      en_tete = ["product_url","upc","titre","price_incl_tax","price_excl_tax","number_available","product_description","category","reviews_rating","image_url"]
      fichier = "one_book.csv"
      # checking if the directory csv exist or not.

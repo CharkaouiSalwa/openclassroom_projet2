@@ -4,8 +4,8 @@ import csv,os
 
 from script2 import get_books_category
 
-#function to get  all books of each category by parameters
-#return list of details of the books of all each category
+#function to get  all books of each category
+#return list of details of all books each category
 def get_all_books_each_category():
     try:
         liste_livre = []
@@ -17,8 +17,7 @@ def get_all_books_each_category():
         soup = BeautifulSoup(r.content, "html.parser")
         menu_category = soup.find('ul',class_='nav-list')
         menu_category = menu_category.findAll('li')
-        category_href = ""
-        for i in range(1,3):#len(menu_category)
+        for i in range(1,len(menu_category)):
             category_href = menu_category[i].find('a')['href']
             category_href=url +category_href
             liste_livre.append(get_books_category(category_href))
