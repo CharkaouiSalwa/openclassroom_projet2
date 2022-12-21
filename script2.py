@@ -5,17 +5,11 @@ import csv,os
 
 from script1 import get_one_book
 
-#function to get  books_category by parameters (string:book name and string:book number)
+#function to get  books_category by parameters (string:url)
 # return list of details of the book of the category in params
-def get_books_category(nom_categorie,num):
+def get_books_category(url):
     try:
-     #convert int to string
-         if isinstance(num, int):
-            num = str(num)
-
-         nom_num = nom_categorie+"_"+num
          liste_livre = []
-         url = f"https://books.toscrape.com/catalogue/category/books/{nom_num}/index.html"
          r = requests.get(url)
          if r.status_code != 200:
              #return error msg if url doesn't work
@@ -24,25 +18,22 @@ def get_books_category(nom_categorie,num):
          liste = soup.find('ol')
          livres = liste.find_all('article', class_='product_pod')
          next_page = soup.find('li',class_='next')
+         # get all books from page 1 (index)
+         url_book =""
+         for livre in livres :
+          url_book = livre.find('a')['href']
+          url_book = url_book.split('/')
+          url_book = f"https://books.toscrape.com/catalogue/"+url_book[3]+'/'+url_book[4]
+          liste_livre.append(get_one_book(url_book))
+         if url == " ":
+             return ["Cette catégorie n'existe pas, veuillez réessayer"]
          if next_page:
-             #get next page link
-             next_page = next_page.find('a')['href']
-         #get all books from page 1 (index)
-         for livre in livres:
-              link = livre.find('a')['href']
-              #split the text from '/'
-              link = link.split('/')
-              link = link[3]
-              link = link.split('_')
-              if link == "":
-                  return ["Ce livre n'existe pas, veuillez réessayer"]
-              else:
-                  book_name = link[0].replace('/','')
-                  book_num = link[1]
-                  liste_livre.extend(get_one_book(book_name,book_num))
-         #get books from next pages
+         # get next page link
+            next_page = next_page.find('a')['href']
+       #get books from next pages
          while next_page:
-            url = f"https://books.toscrape.com/catalogue/category/books/{nom_num}/{next_page}"
+            url = url.split('/')
+            url = url[0]+'/'+url[1]+'/'+url[2]+'/'+url[3]+'/'+url[4]+'/'+url[5]+'/'+url[6]+'/'+next_page
             r = requests.get(url)
             if r.status_code != 200:
                 # return error msg if name or number book is not exist
@@ -50,18 +41,16 @@ def get_books_category(nom_categorie,num):
             soup = BeautifulSoup(r.content, "html.parser")
             liste = soup.find('ol')
             livres = liste.find_all('article', class_='product_pod')
+            url_book = ""
             # get all books from other pages
             for livre in livres:
-                link = livre.find('a')['href']
-                link = link.split('/')
-                link = link[3]
-                link = link.split('_')
-                if link == "":
+                if url == "":
                     return ["Ce livre n'existe pas, veuillez réessayer"]
                 else:
-                    book_name = link[0].replace('/','')
-                    book_num = link[1]
-                    liste_livre.extend(get_one_book(book_name, book_num))
+                    url_book = livre.find('a')['href']
+                    url_book = url_book.split('/')
+                    url_book = f"https://books.toscrape.com/catalogue/" + url_book[3] + '/' + url_book[4]
+                    liste_livre.append(get_one_book(url_book))
             next_page = soup.find('li', class_='next')
             if next_page:
                 # get next page link
@@ -70,15 +59,9 @@ def get_books_category(nom_categorie,num):
     except Exception as e:
       return [e]
 
-#test run of get_books_category
-#books_category = get_books_category("mystery","3") #2 pages
-#books_category = get_books_category("travel","2") #11 books
-#books_category = get_books_category("fiction","10") #4 pages
-books_category = get_books_category("classics","6") #19 books
-
 
 #create a ccv file
-def create_csv():
+def create_csv(url):
     try:
      en_tete = ["product_url","upc","titre","price_incl_tax","price_excl_tax","number_available","product_description","category","reviews_rating","image_url"]
      fichier = "books_category.csv"
@@ -89,10 +72,16 @@ def create_csv():
      with open(f'csv/{fichier}', 'w') as csv_file:
       writer = csv.writer(csv_file, delimiter=',')
       writer.writerow(en_tete)
-      writer.writerows(books_category)
+      writer.writerows(get_books_category(url))
     except Exception as e:
         return [e]
 
 #run function create_csv()
-create_csv()
+create_csv("https://books.toscrape.com/catalogue/category/books/fiction_10/index.html")
+
+
+
+
+
+
 
