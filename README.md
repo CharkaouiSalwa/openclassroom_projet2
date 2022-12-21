@@ -1,59 +1,62 @@
-# openclassroom_projet2
+# Projet 2 : Utilisez les bases de Python pour l'analyse de marché
 [![forthebadge](https://forthebadge.com/images/badges/made-with-python.svg)](https://forthebadge.com)
 
-## Projet 2 : Utilisez les bases de Python pour l'analyse de marché
-Ce projet sert à suivre manuellement les prix des livres sur un sites web http://books.toscrape.com/ d’un concurrent, il y a trop de livres et trop de librairies en ligne l’objectif d'automatiser cette tâche laborieuse via un programme (un scraper) développé en Python, capable d'extraire les informations tarifaires d'autres librairies en ligne.
+## &ensp;&ensp;&ensp;Contexte :
+Création d'un outil en langage Python permettant de récupérer des informations sur des articles comme le titre, le prix, la note etc.. sur les livres du site http://books.toscrape.com/. Cet outil permet également de récupérer les informations d'une catégorie voir de toutes les catégories disponibles et convertir les données dans un fichier CSV. Les images des articles consultés sont également téléchargées automatiquement.
 
- ### prérequis :
-Avoir l'anacondas sur votre pc pour permettre d'utiliser la commande pip
+## &ensp;&ensp;&ensp;Prérequis :
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;- Installer [Python 3.11](https://www.python.org/downloads/) 
+  
+## &ensp;&ensp;&ensp;Installation :
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;- Télécharger le projet depuis [GitHub](https://github.com/CharkaouiSalwa/openclassroom_projet2)
 
-## *l'installation de Python*
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;- Ouvrir le terminal
 
-#### *Visitez le lien suivant* :   [Python](https://www.python.org/downloads/)
-#### *ou bien utilisez le terminal* :
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;- Se positionner dans le dossier git téléchargé
 
-```
-pip install Python
-```
-Après l'installation, téléchargez le repo sur  [Github](https://github.com/CharkaouiSalwa/openclassroom_projet2) 
-Extraire le fichier telechargé, puis accéder au dossier du projet en ligne de commande:
-```
-cd openclassroom_projet2 
-```
-Créer l'environnement virtuel avec la commande :
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;- Créer un environnement virtuel :
 ```
 python -m venv env
 ```
-Activer votre environnement :
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;- Activer l'environnement virtuel : 
 ```
 source  env/bin/activate
 ```
-Installer automatiquements les bibliothéques mentionés sur le fichier avec la commande :
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;- Installer les bibliothéques nécessaires depuis le fichier requirements.txt :
 ```
 pip install -r requirements.txt
 ```
-Copier le lien d'un livre depuis le site http://books.toscrape.com/index.html et le coller sur le script1 .
-exemple d'un livre :
+
+
+## &ensp;&ensp;&ensp;Exécution du projet :
+
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;- Pour scrapper un livre : 
 ```
-create_csv("https://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html")
+python scrap_one_book.py
 ```
-Exécution du script1 :
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;- Pour scrapper une catégorie : 
 ```
-python script1.py
+python scrap_one_category.py
+```
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;- Pour scrapper toutes les catégories : 
+```
+python scrap_all_categories.py
 ```
 
-## Résultat :
-* Un dossier "openclassroom_projet2" contenant :
-    * dossier csv contient le résultat d'exécution d'un seul livre, d'une catégorie, et aprés tous les livres de toute les catégories
-    * dossier images contient les images de tous les livres
-## Contenu du repository github: 
-* fichier sript1.py
-* fichier script2.py
-* fichier script3.py
-* fichier requirements.txt
-* fichier README.md
-* fichier .gitignore
 
+## &ensp;&ensp;&ensp;Résultats :
+  * Dossier csv contient le résultat d'exécution d'un seul livre, d'une catégorie et toutes les catégories
+  * Dossier images contient les images des livres de chaque catégorie
+## &ensp;&ensp;&ensp;Contenu du repository GitHub: 
+* Fichier scrap_one_book.py
+* Fichier scrap_one_category.py
+* Fichier scrap_all_categories.py
+* Fichier requirements.txt
+* Fichier README.md
+* Fichier .gitignore
+
+<br/><br/><br/>
+*Par Salwa CHARKAOUI*
 
 
 
