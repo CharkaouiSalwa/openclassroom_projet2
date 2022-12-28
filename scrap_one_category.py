@@ -8,7 +8,7 @@ from scrap_one_book import get_one_book
 #function to get  books_category by parameters (string:url)
 # return list of details of the book of the category in params
 def get_books_category(url):
-    try:
+
          liste_livre = []
          r = requests.get(url)
          if r.status_code != 200:
@@ -20,7 +20,7 @@ def get_books_category(url):
          next_page = soup.find('li',class_='next')
          # get all books from page 1 (index)
          url_book =""
-         for livre in livres :
+         for livre in livres:
           url_book = livre.find('a')['href']
           url_book = url_book.split('/')
           url_book = f"https://books.toscrape.com/catalogue/"+url_book[3]+'/'+url_book[4]
@@ -56,13 +56,12 @@ def get_books_category(url):
                 # get next page link
                 next_page = next_page.find('a')['href']
          return liste_livre
-    except Exception as e:
-      return [e]
+
 
 
 #create a ccv file
 def create_csv(url):
-    try:
+
      en_tete = ["product_url","upc","titre","price_incl_tax","price_excl_tax","number_available","product_description","category","reviews_rating","image_url"]
      fichier = "books_category.csv"
      # checking if the directory csv exist or not.
@@ -73,11 +72,16 @@ def create_csv(url):
       writer = csv.writer(csv_file, delimiter=',')
       writer.writerow(en_tete)
       writer.writerows(get_books_category(url))
-    except Exception as e:
-        return [e]
+
 
 #run function create_csv()
-create_csv("https://books.toscrape.com/catalogue/category/books/fiction_10/index.html")
+try :
+  if __name__ == "__main__":
+      create_csv("https://books.toscrape.com/catalogue/category/books/fiction_10/index.html")
+except Exception as e:
+  print(e)
+
+
 
 
 

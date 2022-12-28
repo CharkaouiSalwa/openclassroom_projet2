@@ -23,7 +23,7 @@ python -m venv env
 source  env/bin/activate
 ```
 &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;- Installer les bibliothéques nécessaires depuis le fichier requirements.txt :
-```
+``` shell
 pip install -r requirements.txt
 ```
 
